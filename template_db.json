@@ -1,0 +1,2063 @@
+{
+  "schema": "schemzip.template-db",
+  "schema_version": 1,
+  "program_version": "0.1.0",
+  "source_file": "Analog.xml",
+  "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+  "source_hash_u64": 3608296431709395713,
+  "template_count": 19,
+  "templates": [
+    {
+      "name": "NPN",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.3125,
+          "y": 0.3125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.3125,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.3125,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.3125,
+          "y": 0.6875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.3125,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=12;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "NPN",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "Current",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.125,
+          "y": 0.125,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "4",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=none;",
+          "width": 0.75,
+          "height": 0.75
+        },
+        {
+          "x": 0.5,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "cell_id": "6",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "cell_id": "7",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=block;endFill=1;endSize=7;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "Current",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "Voltage",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.125,
+          "y": 0.125,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "4",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=none;",
+          "width": 0.75,
+          "height": 0.75
+        },
+        {
+          "x": 0.5,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "cell_id": "6",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "Voltage",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "GND",
+      "width": 16.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.875,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.125,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": 0.75,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "GND",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "Power",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "Power",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "res",
+      "width": 16.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.5,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.1875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.1875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.3125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.3125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "8",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.4375,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.5625,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "9",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.4375,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "9",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.6875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "10",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.8125,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "11",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.6875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "11",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "12",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.8125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "12",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "cell_id": "8",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "cell_id": "9",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 10,
+          "to": 12,
+          "cell_id": "10",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 13,
+          "to": 14,
+          "cell_id": "11",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 15,
+          "to": 16,
+          "cell_id": "12",
+          "style": "endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "res",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "ind",
+      "width": 16.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.954348,
+          "y": 0.53125,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 0.523913,
+          "y": 0.40625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": -0.05,
+          "y": 0.46875,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "4",
+          "seq": 2
+        },
+        {
+          "x": 0.141304,
+          "y": 0.625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "4",
+          "seq": 3
+        },
+        {
+          "x": 0.954348,
+          "y": 0.5625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "4",
+          "seq": 4
+        },
+        {
+          "x": 0.954348,
+          "y": 0.625,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 5
+        },
+        {
+          "x": 0.954348,
+          "y": 0.375,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 6
+        },
+        {
+          "x": 0.954348,
+          "y": 0.28125,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.523913,
+          "y": 0.15625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": -0.05,
+          "y": 0.21875,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "5",
+          "seq": 2
+        },
+        {
+          "x": 0.141304,
+          "y": 0.375,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "5",
+          "seq": 3
+        },
+        {
+          "x": 0.954348,
+          "y": 0.3125,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "5",
+          "seq": 4
+        },
+        {
+          "x": 0.954348,
+          "y": 0.375,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 5
+        },
+        {
+          "x": 0.954348,
+          "y": 0.1875,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 6
+        },
+        {
+          "x": 1.002174,
+          "y": 0.75,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.523913,
+          "y": 0.65625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": -0.05,
+          "y": 0.71875,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "6",
+          "seq": 2
+        },
+        {
+          "x": 0.141304,
+          "y": 0.875,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "6",
+          "seq": 3
+        },
+        {
+          "x": 0.954348,
+          "y": 0.8125,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "6",
+          "seq": 4
+        },
+        {
+          "x": 0.954348,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 5
+        },
+        {
+          "x": 0.954348,
+          "y": 0.625,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 6
+        },
+        {
+          "x": 0.954348,
+          "y": 0.0625,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.954348,
+          "y": 0.1875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 2
+        },
+        {
+          "x": 0.906522,
+          "y": 0.96875,
+          "kind": "routePoint",
+          "role": "points",
+          "cell_id": "8",
+          "seq": 0
+        },
+        {
+          "x": 0.476087,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "cell_id": "4",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "cell_id": "5",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 14,
+          "to": 15,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 15,
+          "to": 16,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 16,
+          "to": 17,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 17,
+          "to": 18,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 18,
+          "to": 19,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 19,
+          "to": 20,
+          "cell_id": "6",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 21,
+          "to": 22,
+          "cell_id": "7",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 22,
+          "to": 23,
+          "cell_id": "7",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 24,
+          "to": 19,
+          "cell_id": "8",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        },
+        {
+          "from": 19,
+          "to": 25,
+          "cell_id": "8",
+          "style": "curved=1;endArrow=none;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;strokeColor=#000000;endFill=0;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "ind",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "cap",
+      "width": 16.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 1.0,
+          "y": 0.375,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.375,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.625,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.625,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 0.375,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": 0.5,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.625,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "cap",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "PMOS",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.4375,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 0.25,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "8",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "9",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "10",
+          "seq": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=10;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "cell_id": "8",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 10,
+          "cell_id": "9",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 11,
+          "to": 1,
+          "cell_id": "10",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "PMOS",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "NMOS",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.4375,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 0.25,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "8",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "9",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "9",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "10",
+          "seq": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=10;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "cell_id": "8",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "cell_id": "9",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 12,
+          "to": 5,
+          "cell_id": "10",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "NMOS",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "PCH",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.4375,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": 0.25,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "9",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 0.375,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "10",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=none;",
+          "width": 0.25,
+          "height": 0.25
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;endSize=10;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 8,
+          "cell_id": "8",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 9,
+          "to": 1,
+          "cell_id": "9",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "PCH",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "NCH",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": 0.4375,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.4375,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        },
+        {
+          "x": 0.4375,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "6",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": 0.75,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "6",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "7",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "7",
+          "seq": 1
+        },
+        {
+          "x": 0.25,
+          "y": 0.875,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "8",
+          "seq": 0
+        },
+        {
+          "x": 0.25,
+          "y": 0.125,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "8",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 0.25,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "9",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "9",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "10",
+          "seq": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "cell_id": "6",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;endSize=10;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "cell_id": "7",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "cell_id": "8",
+          "style": "endArrow=none;html=1;rounded=0;strokeWidth=3;strokeColor=#000000;"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "cell_id": "9",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 12,
+          "to": 5,
+          "cell_id": "10",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "NCH",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "arrow",
+      "width": 47.999999999999865,
+      "height": 0.47619047619047616,
+      "vertices": [
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "2",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "2",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "2",
+          "style": "shape=flexArrow;endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;endWidth=17;endSize=8;width=15;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "arrow",
+        "source_dimensions": {
+          "w": 47.999999999999865,
+          "h": 0.47619047619047616
+        }
+      }
+    },
+    {
+      "name": "Zin",
+      "width": 32.0,
+      "height": 32.0,
+      "vertices": [
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "4",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "4",
+          "seq": 1
+        },
+        {
+          "x": null,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "4",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=19;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "Zin",
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 32.0
+        }
+      }
+    },
+    {
+      "name": "Zin2",
+      "width": 16.0,
+      "height": 48.0,
+      "vertices": [
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "3",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": 1.0,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "3",
+          "seq": 1
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "3",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=19;strokeColor=#000000;strokeWidth=1;"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "Zin2",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 48.0
+        }
+      }
+    },
+    {
+      "name": "node",
+      "width": 16.0,
+      "height": 16.0,
+      "vertices": [
+        {
+          "x": null,
+          "y": 0.25,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "3",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=none;",
+          "width": 0.5,
+          "height": 0.5
+        },
+        {
+          "x": 1.0,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "node",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 16.0
+        }
+      }
+    },
+    {
+      "name": "node2",
+      "width": 16.0,
+      "height": 16.0,
+      "vertices": [
+        {
+          "x": null,
+          "y": 0.25,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "3",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=#000000;",
+          "width": 0.5,
+          "height": 0.5
+        },
+        {
+          "x": 1.0,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "5",
+          "seq": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "5",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "cell_id": "5",
+          "style": "endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "node2",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 16.0
+        }
+      }
+    },
+    {
+      "name": "dot",
+      "width": 16.0,
+      "height": 16.0,
+      "vertices": [
+        {
+          "x": 0.25,
+          "y": 0.25,
+          "kind": "vertex",
+          "role": "geometry",
+          "cell_id": "3",
+          "style": "ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;fillColor=#000000;",
+          "width": 0.5,
+          "height": 0.5
+        }
+      ],
+      "edges": [],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": "dot",
+        "source_dimensions": {
+          "w": 16.0,
+          "h": 16.0
+        }
+      }
+    },
+    {
+      "name": "template_18",
+      "width": 32.0,
+      "height": 0.4,
+      "vertices": [
+        {
+          "x": null,
+          "y": null,
+          "kind": "endpoint",
+          "role": "sourcePoint",
+          "cell_id": "2",
+          "seq": 0
+        },
+        {
+          "x": 1.0,
+          "y": null,
+          "kind": "endpoint",
+          "role": "targetPoint",
+          "cell_id": "2",
+          "seq": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "cell_id": "2",
+          "style": "edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=blockThin;endFill=1;endSize=19;strokeColor=#000000;strokeWidth=1;"
+        }
+      ],
+      "meta": {
+        "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
+        "source_title": null,
+        "source_dimensions": {
+          "w": 32.0,
+          "h": 0.4
+        }
+      }
+    }
+  ]
+}

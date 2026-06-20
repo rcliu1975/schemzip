@@ -107,19 +107,15 @@ class StencilTemplate:
 Tasks
 
 
-Parse mxlibrary
+- [x] Parse mxlibrary
 
+- [x] Extract all symbols
 
-Extract all symbols
+- [x] Normalize coordinates
 
+- [x] Store canonical representation
 
-Normalize coordinates
-
-
-Store canonical representation
-
-
-Generate template database
+- [x] Generate template database
 
 
 
@@ -190,19 +186,21 @@ Tasks
 
 
 
-Parse mxGraphModel
+- [x] Parse mxGraphModel
 
 
-Build connectivity graph
+- [x] Build connectivity graph
 
 
-Find connected components
+- [x] Find connected components
 
 
-Calculate bounding boxes
+- [x] Calculate bounding boxes
 
 
-Normalize coordinates
+- [x] Normalize coordinates
+
+Validated on `drawio_samples/AnlogIC.drawio`: 39 mxCells, 6 connected components.
 
 
 
