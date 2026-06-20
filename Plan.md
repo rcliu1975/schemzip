@@ -400,12 +400,8 @@ best=score
 Deliverables
 
 
-
-matcher.py
-
-
-
-matcher_test.py
+- [x] matcher.py
+- [ ] matcher_test.py
 
 
 
@@ -515,8 +511,10 @@ uint16
 Deliverables
 
 
+- [x] compress_aic.py
+- [x] restore_aic.py
 
-compress.py
+Validated on `drawio_samples/AnlogIC.drawio`: AIC archive 1.5K, restored drawio 16K, 39 mxCells preserved.
 
 
 

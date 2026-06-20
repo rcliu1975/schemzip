@@ -31,6 +31,7 @@ class StencilTemplate:
     height: float
     vertices: List[Dict[str, Any]]
     edges: List[Dict[str, Any]]
+    source_xml: str
     meta: Dict[str, Any]
 
 
@@ -243,6 +244,7 @@ def _extract_template(item: Dict[str, Any], source_hash: str, index: int) -> Ste
         height=height,
         vertices=vertices,
         edges=edges,
+        source_xml=xml_text,
         meta=meta,
     )
 

@@ -14,7 +14,8 @@
 
 - Phase 1 已完成：Stencil Database
 - Phase 2 已完成：Drawio Parser / CellGraph
-- Phase 3：Template Matching，尚未開始
+- Phase 3 已完成：Template Matching
+- Phase 4 已完成：AIC 壓縮 / 還原
 
 ## 版本資訊
 
@@ -31,6 +32,9 @@
 - `template_db.pkl`：模板資料庫的 pickle 版本
 - `parse_drawio.py`：解析 `.drawio` 並輸出 CellGraph
 - `graph_builder.py`：建立連通元件、bbox 與正規化資料
+- `matcher.py`：模板比對與 canonical signature
+- `compress_aic.py`：將 `.drawio` 壓縮成 `.aic`
+- `restore_aic.py`：將 `.aic` 還原成 `.drawio`
 - `drawio_samples/AnlogIC.drawio`：測試樣本
 - `Plan.md`：開發計畫與階段進度
 
@@ -59,8 +63,27 @@ python3 parse_drawio.py drawio_samples/AnlogIC.drawio
 
 - `drawio_samples/AnlogIC.graph.json`
 
+### 壓縮成 AIC
+
+```bash
+cd schemzip
+python3 compress_aic.py drawio_samples/AnlogIC.drawio -o drawio_samples/AnlogIC.aic
+```
+
+預設會使用同目錄的 `template_db.json` 做查表壓縮。
+
+### 還原 AIC
+
+```bash
+cd schemzip
+python3 restore_aic.py drawio_samples/AnlogIC.aic -o drawio_samples/AnlogIC.restored.drawio
+```
+
+還原時會讀取本機的 `template_db.json`，並檢查 `library_hash` 是否一致。
+
 ## 備註
 
-- 目前 `parse_library.py` 與 `parse_drawio.py` 皆已可執行
+- `graph.json` 是中間分析格式，不是最終壓縮格式
+- `.aic` 才是最終交付的查表壓縮格式
+- 目前 `parse_library.py`、`parse_drawio.py`、`compress_aic.py`、`restore_aic.py` 皆已可執行
 - `Plan.md` 會持續反映分階段進度
-- 後續會補上 Template Matching 與壓縮/解壓格式
