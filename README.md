@@ -17,6 +17,17 @@
 - Phase 3 已完成：Template Matching
 - Phase 4 已完成：AIC 壓縮 / 還原
 
+## Plan.md 工作現狀
+
+`Plan.md` 的主線已走到 Phase 4：
+
+- Phase 1：已建立 `Analog.xml` 的 stencil database，包含 `template_db.json` 與 `template_db.pkl`
+- Phase 2：已完成 `.drawio` 解析、連通元件切分、bbox 計算與正規化
+- Phase 3：已完成模板查表比對，能辨識已知 symbol
+- Phase 4：已完成 `.aic` 壓縮與還原流程，並保留版本與 `library_hash`
+
+目前 `graph.json` 只作為中間分析格式使用，不是最終壓縮格式。
+
 ## 版本資訊
 
 - 程式版本：`0.1.0`
@@ -87,3 +98,13 @@ python3 restore_aic.py drawio_samples/AnlogIC.aic -o drawio_samples/AnlogIC.rest
 - `.aic` 才是最終交付的查表壓縮格式
 - 目前 `parse_library.py`、`parse_drawio.py`、`compress_aic.py`、`restore_aic.py` 皆已可執行
 - `Plan.md` 會持續反映分階段進度
+
+## Todo.md 未來工作
+
+`Todo.md` 描述的是更上層的分享與部署方向，重點如下：
+
+- 建立無後端的 Draw.io 分享流程，讓壓縮資料可直接放進 URL
+- 把 stencil library 放到 GitHub Pages，使用版本化與 hash 驗證
+- 建立 dictionary / reverse dictionary 的 build-time 工具
+- 將壓縮結果編成 Base64URL token stream，方便在瀏覽器端解碼
+- 讓開啟分享 URL 時可自動載入 library、解壓 payload，回到 Draw.io 可編輯內容
