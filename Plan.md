@@ -11,7 +11,8 @@ The compressor shall:
 * Replace repeated symbol geometries with compact references.
 * Support lossless decompression back to drawio format.
 * Continuously improve recognition accuracy using an expanding corpus.
-
+* 程式要有版本資訊,可以隨時確認.
+* 壓縮後的檔案需要有程式版號資訊,以便解壓時可以確認解壓縮程式的一致性.
 
 ---
 
