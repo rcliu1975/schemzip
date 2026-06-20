@@ -9,9 +9,8 @@ import gzip
 import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
-from matcher import canonical_shape_from_cells
 from matcher import load_template_db
 
 
@@ -19,39 +18,21 @@ PROGRAM_VERSION = "0.1.0"
 SCHEMA_VERSION = 1
 
 
-def _set_if_present(element: ET.Element, key: str, value: Any) -> None:
-    if value is None:
-        return
-    element.set(key, str(value))
-
-
-def _transform_number(value: Optional[str], origin: Optional[float], scale: float, target_origin: Optional[float]) -> Optional[str]:
+def _scale_number(value: Optional[str], scale: float) -> Optional[str]:
     if value is None:
         return None
     try:
         numeric = float(value)
     except ValueError:
         return value
-    if origin is None:
-        transformed = numeric * scale + (target_origin or 0.0)
-    else:
-        transformed = (numeric - origin) * scale + (target_origin or 0.0)
-    return str(round(transformed, 6))
+    return str(round(numeric * scale, 6))
 
 
-def _transform_geometry(
-    geom: ET.Element,
-    origin_x: float,
-    origin_y: float,
-    scale_x: float,
-    scale_y: float,
-    target_x: float,
-    target_y: float,
-) -> None:
+def _scale_geometry(geom: ET.Element, scale_x: float, scale_y: float) -> None:
     if geom.get("x") is not None:
-        geom.set("x", _transform_number(geom.get("x"), origin_x, scale_x, target_x) or geom.get("x") or "")
+        geom.set("x", _scale_number(geom.get("x"), scale_x) or geom.get("x") or "")
     if geom.get("y") is not None:
-        geom.set("y", _transform_number(geom.get("y"), origin_y, scale_y, target_y) or geom.get("y") or "")
+        geom.set("y", _scale_number(geom.get("y"), scale_y) or geom.get("y") or "")
     if geom.get("width") is not None:
         try:
             geom.set("width", str(round(float(geom.get("width")) * scale_x, 6)))
@@ -64,14 +45,14 @@ def _transform_geometry(
             pass
     for point in geom.findall(".//mxPoint"):
         if point.get("x") is not None:
-            point.set("x", _transform_number(point.get("x"), origin_x, scale_x, target_x) or point.get("x") or "")
+            point.set("x", _scale_number(point.get("x"), scale_x) or point.get("x") or "")
         if point.get("y") is not None:
-            point.set("y", _transform_number(point.get("y"), origin_y, scale_y, target_y) or point.get("y") or "")
+            point.set("y", _scale_number(point.get("y"), scale_y) or point.get("y") or "")
 
 
 def _expand_template_item(item: Dict[str, Any], source_xml: str) -> List[ET.Element]:
     prefix = item["id_prefix"]
-    target_bbox = item["bbox"]
+    placement = item["placement"]
 
     graph_model = ET.fromstring(source_xml)
     root = graph_model.find("root")
@@ -79,16 +60,18 @@ def _expand_template_item(item: Dict[str, Any], source_xml: str) -> List[ET.Elem
         raise ValueError("template xml missing root")
 
     cells = [cell for cell in root.findall("mxCell") if cell.get("id") not in {"0", "1"}]
-    shape = canonical_shape_from_cells(cells)
-    template_bbox = shape["bbox"]
-    origin_x = template_bbox["x"] or 0.0
-    origin_y = template_bbox["y"] or 0.0
-    template_width = template_bbox["width"] or 1.0
-    template_height = template_bbox["height"] or 1.0
-    target_x = target_bbox["x"] or 0.0
-    target_y = target_bbox["y"] or 0.0
-    target_width = target_bbox["width"] or template_width
-    target_height = target_bbox["height"] or template_height
+    group_cell = next((cell for cell in cells if cell.get("style") == "group" and cell.get("vertex") == "1"), None)
+    if group_cell is None:
+        raise ValueError("template xml missing group cell")
+    group_geom = group_cell.find("mxGeometry")
+    if group_geom is None:
+        raise ValueError("template group missing geometry")
+    template_width = float(group_geom.get("width") or 1.0)
+    template_height = float(group_geom.get("height") or 1.0)
+    target_x = float(placement.get("x") or 0.0)
+    target_y = float(placement.get("y") or 0.0)
+    target_width = float(placement.get("width") or template_width)
+    target_height = float(placement.get("height") or template_height)
     scale_x = target_width / template_width if template_width else 1.0
     scale_y = target_height / template_height if template_height else 1.0
 
@@ -113,7 +96,21 @@ def _expand_template_item(item: Dict[str, Any], source_xml: str) -> List[ET.Elem
 
         geom = cloned.find("mxGeometry")
         if geom is not None:
-            _transform_geometry(geom, origin_x, origin_y, scale_x, scale_y, target_x, target_y)
+            if cell is group_cell:
+                if geom.get("x") is not None:
+                    geom.set("x", str(round(target_x, 6)))
+                else:
+                    geom.set("x", str(round(target_x, 6)))
+                if geom.get("y") is not None:
+                    geom.set("y", str(round(target_y, 6)))
+                else:
+                    geom.set("y", str(round(target_y, 6)))
+                if geom.get("width") is not None:
+                    geom.set("width", str(round(target_width, 6)))
+                if geom.get("height") is not None:
+                    geom.set("height", str(round(target_height, 6)))
+            else:
+                _scale_geometry(geom, scale_x, scale_y)
         expanded.append(cloned)
     return expanded
 

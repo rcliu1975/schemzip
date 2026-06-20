@@ -68,17 +68,36 @@ def _component_cells(component: Any, cell_elements: Dict[str, ET.Element]) -> Li
     return [cell_elements[cell_id] for cell_id in component.cell_ids if cell_id in cell_elements]
 
 
+def _component_placement(component: Any, component_cells: List[ET.Element]) -> Dict[str, Any]:
+    for cell in component_cells:
+        if cell.get("style") == "group" and cell.get("vertex") == "1":
+            geom = cell.find("mxGeometry")
+            if geom is not None:
+                return {
+                    "x": float(geom.get("x") or 0.0),
+                    "y": float(geom.get("y") or 0.0),
+                    "width": float(geom.get("width") or 0.0),
+                    "height": float(geom.get("height") or 0.0),
+                }
+    return {
+        "x": component.bbox["x"],
+        "y": component.bbox["y"],
+        "width": component.bbox["width"],
+        "height": component.bbox["height"],
+    }
+
+
 def _build_instance_item(
     template: Dict[str, Any],
     component_cells: List[ET.Element],
-    shape: Dict[str, Any],
+    placement: Dict[str, Any],
     template_entry_index: int,
 ) -> Dict[str, Any]:
     return {
         "kind": "template",
         "template_index": template_entry_index,
         "template_name": template.get("name"),
-        "bbox": shape["bbox"],
+        "placement": placement,
         "cell_count": len(component_cells),
     }
 
@@ -116,6 +135,7 @@ def compress_drawio(path: Path, template_db_path: Path) -> Dict[str, Any]:
         for component in ordered_components:
             component_cells = _component_cells(component, cell_elements)
             shape = canonical_shape_from_cells(component_cells)
+            placement = _component_placement(component, component_cells)
             match = match_component(component_cells, template_index)
             if match.matched and match.template is not None:
                 template_name = match.template.get("name")
@@ -128,7 +148,7 @@ def compress_drawio(path: Path, template_db_path: Path) -> Dict[str, Any]:
                         **_build_instance_item(
                             match.template,
                             component_cells,
-                            shape,
+                            placement,
                             template_entry_index,
                         ),
                     }
