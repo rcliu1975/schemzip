@@ -280,7 +280,7 @@ Tasks:
 - [x] Use `postMessage` as the integration mechanism
 - [x] Keep the restored XML in memory, not in the bookmark URL
 - [x] Default embed language is English
-- [ ] Add iframe `save` event handling and write back the canonical URL
+- [x] Add iframe `save` event handling and write back the canonical URL
 
 Deliverables:
 

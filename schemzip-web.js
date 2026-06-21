@@ -7,6 +7,11 @@ const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
 
 const templateCache = new Map();
 const embeddedOrigins = new Set(["https://embed.diagrams.net"]);
+const appState = {
+  sourceFile: "diagram.drawio",
+  currentXml: "",
+  mode: "bookmark",
+};
 
 function getLocalStorage() {
   if (typeof window === "undefined") {
@@ -155,6 +160,18 @@ function buildDrawioUploadPayload(xml, sourceFile) {
     created_at: new Date().toISOString(),
     xml,
   };
+}
+
+async function buildRawDrawioBookmarkUrl(xml, sourceFile) {
+  const payload = buildDrawioUploadPayload(xml, sourceFile);
+  const encoded = encodePayloadJson(payload);
+  const data = await encoded;
+  return buildBookmarkUrl(window.location.href, {
+    v: String(SCHEMA_VERSION),
+    lib: "drawio",
+    ver: "raw",
+    data,
+  });
 }
 
 function parseCompactFragment(fragment) {
@@ -579,6 +596,9 @@ function setBrowserUrl(url) {
 
 async function importDrawioFile(file) {
   const text = await readTextFile(file);
+  appState.sourceFile = file.name;
+  appState.currentXml = text;
+  appState.mode = "raw";
   const payload = buildDrawioUploadPayload(text, file.name);
   const encoded = await encodePayloadJson(payload);
   const params = {
@@ -616,6 +636,7 @@ async function bootEditor(xml) {
   const editorUrl = DEFAULT_EMBED_URL;
   const iframe = document.getElementById("editor");
   let ready = false;
+  appState.currentXml = xml;
 
   const receive = (event) => {
     if (!embeddedOrigins.has(event.origin)) {
@@ -637,6 +658,26 @@ async function bootEditor(xml) {
         autosave: 0,
         xml,
       }), "*");
+      return;
+    }
+    if (msg.event === "save" && typeof msg.xml === "string" && msg.xml.length > 0) {
+      appState.currentXml = msg.xml;
+      appState.mode = "raw";
+      updateDocumentTitle(appState.sourceFile || "diagram.drawio", new Date());
+      setStatus("ok", "Saved");
+      setDetails([
+        `Saved file: ${appState.sourceFile || "diagram.drawio"}`,
+        "The current diagram XML has been written back to the browser URL.",
+        "Copy the URL or save the tab as a bookmark to preserve this revision.",
+      ]);
+      setImportHint("Diagram saved. URL updated.");
+      buildRawDrawioBookmarkUrl(msg.xml, appState.sourceFile || "diagram.drawio").then((bookmarkUrl) => {
+        setBookmarkUrl(bookmarkUrl);
+        setBrowserUrl(bookmarkUrl);
+      }).catch((error) => {
+        setStatus("warn", "Save updated");
+        setImportHint(error.message || String(error));
+      });
     }
   };
 
@@ -739,6 +780,9 @@ async function bootApp() {
     if (archive.schema === RAW_DRAWIO_SCHEMA) {
       const sourceFile = archive.source_file || "diagram.drawio";
       const xml = String(archive.xml || "");
+      appState.sourceFile = sourceFile;
+      appState.currentXml = xml;
+      appState.mode = "raw";
       updateDocumentTitle(sourceFile, archive.created_at ? new Date(archive.created_at) : new Date());
       setPill("payload-pill", `payload: ${payload.length} chars`);
       setStatus("ok", "Ready");
@@ -756,6 +800,9 @@ async function bootApp() {
     const { templateDb, url } = await loadTemplateDb(params);
     const mxfile = buildArchiveDocument(archive, templateDb);
     const xml = serializeXml(mxfile);
+    appState.currentXml = xml;
+    appState.mode = "archive";
+    appState.sourceFile = String(archive.source_file || "diagram.drawio");
 
     setStatus("ok", "Ready");
     setDetails([
