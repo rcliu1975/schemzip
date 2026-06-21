@@ -224,15 +224,18 @@ The restored XML must not be pushed back into the URL.
 
 Tasks:
 
-- Parse URL hash and query parameters
-- Extract `lib`, `ver`, and compressed payload
-- Keep restored XML out of the URL
+- [x] Parse URL hash and query parameters
+- [x] Extract `lib`, `ver`, and compressed payload
+- [x] Keep restored XML out of the URL
+- [x] Browser entrypoint: `schemzip.html`
+- [x] URL/share helpers wired to the bookmark flow
 
 Deliverables:
 
-- `schemzip.html`
-- URL parser logic
-- share URL builder
+- [x] `schemzip.html`
+- [x] `schemzip-web.js`
+- [x] URL parser logic
+- [x] share URL builder
 
 ---
 
@@ -241,22 +244,22 @@ Deliverables:
 Library source:
 
 ```text
-https://raw.githubusercontent.com/rcliu1975/schemzip/v1.0.0/Analog.xml
+https://raw.githubusercontent.com/rcliu1975/schemzip/v1.0.0/template_db.json
 ```
 
 Tasks:
 
-- Download versioned stencil library from GitHub Raw
-- Avoid `main/Analog.xml`
-- Validate bookmark library version for reproducible decoding
-- Cache library metadata locally when needed
+- [x] Download versioned stencil library from GitHub Raw
+- [x] Avoid `main/Analog.xml`
+- [x] Validate bookmark library version for reproducible decoding
+- [x] Cache library metadata locally when needed
 
 Do not rely on Local Storage sharing across origins. Use the embed-first browser flow instead of a viewer page that cannot access local bookmark state.
 
 Deliverables:
 
-- library loader
-- versioned library metadata
+- [x] library loader
+- [x] versioned library metadata
 
 ---
 
@@ -270,17 +273,17 @@ https://embed.diagrams.net/?embed=1&proto=json
 
 Tasks:
 
-- Initialize iframe
-- Wait for the embed ready message
-- Send `load` message with restored XML
-- Render the diagram inside the browser
-- Use `postMessage` as the integration mechanism
-- Keep the restored XML in memory, not in the bookmark URL
+- [x] Initialize iframe
+- [x] Wait for the embed ready message
+- [x] Send `load` message with restored XML
+- [x] Render the diagram inside the browser
+- [x] Use `postMessage` as the integration mechanism
+- [x] Keep the restored XML in memory, not in the bookmark URL
 
 Deliverables:
 
-- embed UI integration
-- `postMessage` bridge
+- [x] embed UI integration
+- [x] `postMessage` bridge
 
 ---
 
@@ -288,25 +291,25 @@ Deliverables:
 
 V1:
 
-- Manual bookmark creation
-- Generate URL
-- Copy URL
-- User saves bookmark
+- [x] Manual bookmark creation
+- [x] Generate URL
+- [x] Copy URL
+- [ ] User saves bookmark
 
 This is the required first release path.
 
 V2:
 
-- Optional Chrome Extension
-- `bookmarks` permission only
-- Generate URL and create bookmark automatically
+- [ ] Optional Chrome Extension
+- [ ] `bookmarks` permission only
+- [ ] Generate URL and create bookmark automatically
 
 The extension is optional and should not block the first release.
 
 Deliverables:
 
-- bookmark-friendly URL generator
-- optional extension plan
+- [x] bookmark-friendly URL generator
+- [ ] optional extension plan
 
 ---
 

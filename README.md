@@ -17,6 +17,11 @@
 - Phase 2 已完成：Drawio Parser / CellGraph
 - Phase 3 已完成：Template Matching
 - Phase 4 已完成：AIC 壓縮 / 還原
+- Phase 5 已開始落地：`schemzip.html` 入口、URL parser、share URL builder
+- Phase 6 已完成主要落地：versioned library loader + 本地 metadata cache
+- Phase 7 基本 embed bridge 已落地：iframe / `postMessage` / `load` 流程
+- Phase 8 已開始落地：bookmark URL 生成與複製
+- `schemzip.html` 現在可讀取 bookmark、還原 archive，並輸出可複製的 canonical bookmark URL
 - Web UI 方向已在 `Plan.md` 定義為 bookmark-first / `embed.diagrams.net` 架構
 
 ## Plan.md 工作現狀
@@ -47,6 +52,8 @@
 - `compress_aic.py`：將 `.drawio` 壓縮成 `.aic`
 - `restore_aic.py`：將 `.aic` 還原成 `.drawio`
 - `schemzip_url.py`：share URL、Base64URL 與 payload 編解碼
+- `schemzip.html`：bookmark-first Web UI 入口
+- `schemzip-web.js`：browser 端 URL parsing、library loading、archive restore、embed bridge
 - `tools/build-dictionary.js`：產生 dictionary / reverse dictionary 的 build-time 工具
 - `drawio_samples/AnlogIC.drawio`：測試樣本
 - `Plan.md`：開發計畫與 bookmark-first Web UI roadmap
@@ -106,7 +113,7 @@ python3 restore_aic.py drawio_samples/AnlogIC.aic -o drawio_samples/AnlogIC.rest
 `Plan.md` 描述的是 bookmark-first 的 Web UI 方向，重點如下：
 
 - 使用者以 bookmark 開啟 `schemzip.html`
-- 由 URL 下載對應版本的 stencil library
+- 由 URL 下載對應版本的 stencil library metadata
 - 透過 `embed.diagrams.net` 顯示還原後圖面
 - 壓縮資料放在 URL fragment 中
 - Chrome Extension 僅列為 optional

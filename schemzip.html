@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>schemzip</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --panel: #161b22;
+      --panel-2: #0f141b;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --border: #30363d;
+      --accent: #f59e0b;
+      --accent-2: #22c55e;
+      --danger: #ef4444;
+      --shadow: rgba(0, 0, 0, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 22%),
+        linear-gradient(180deg, #0b0f14 0%, #10161f 100%);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    .app {
+      display: grid;
+      gap: 16px;
+      min-height: calc(100vh - 40px);
+      grid-template-rows: auto auto minmax(0, 1fr);
+    }
+
+    .hero,
+    .status,
+    .viewer {
+      border: 1px solid var(--border);
+      background: rgba(22, 27, 34, 0.88);
+      box-shadow: 0 18px 48px var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      padding: 18px 20px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: grid;
+      gap: 6px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+      line-height: 1.5;
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 27, 0.8);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .status {
+      padding: 16px 20px;
+      border-radius: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .bookmark {
+      padding: 16px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(22, 27, 34, 0.82);
+      box-shadow: 0 18px 48px var(--shadow);
+      display: grid;
+      gap: 12px;
+    }
+
+    .bookmark-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .bookmark-head h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .bookmark-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .bookmark-controls {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bookmark-controls textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 27, 0.95);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      line-height: 1.5;
+    }
+
+    .bookmark-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .bookmark-actions button {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0.1));
+      color: var(--text);
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .bookmark-actions button:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .bookmark-actions .hint {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      border: 1px solid transparent;
+    }
+
+    .badge.ok {
+      color: #bbf7d0;
+      background: rgba(34, 197, 94, 0.14);
+      border-color: rgba(34, 197, 94, 0.24);
+    }
+
+    .badge.warn {
+      color: #fde68a;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(245, 158, 11, 0.24);
+    }
+
+    .badge.error {
+      color: #fecaca;
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.24);
+    }
+
+    .details {
+      color: var(--muted);
+      line-height: 1.55;
+      display: grid;
+      gap: 6px;
+      word-break: break-word;
+    }
+
+    .details code {
+      color: var(--text);
+    }
+
+    .viewer {
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 520px;
+      position: relative;
+    }
+
+    .viewer iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      display: block;
+      background: #fff;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      background: linear-gradient(180deg, rgba(15, 20, 27, 0.86), rgba(15, 20, 27, 0.7));
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay pre {
+      margin: 12px 0 0;
+      max-width: 100%;
+      white-space: pre-wrap;
+      text-align: left;
+      color: #fca5a5;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 12px;
+      }
+
+      .app {
+        min-height: calc(100vh - 24px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="brand">
+        <h1>schemzip bookmark viewer</h1>
+        <p>
+          Bookmark-first draw.io restoration. The fragment keeps the compressed archive only;
+          restored XML stays in memory and is handed to <code>embed.diagrams.net</code>.
+        </p>
+      </div>
+      <div class="pill" id="app-version">program 0.1.0</div>
+    </section>
+
+    <section class="status" aria-live="polite">
+      <div class="status-row">
+        <span class="badge warn" id="state-badge">Loading</span>
+        <span class="pill" id="library-pill">library: pending</span>
+        <span class="pill" id="payload-pill">payload: pending</span>
+      </div>
+      <div class="details" id="details">
+        Opening bookmark and resolving archive metadata.
+      </div>
+    </section>
+
+    <section class="bookmark" aria-label="Bookmark tools">
+      <div class="bookmark-head">
+        <div>
+          <h2>Bookmark URL</h2>
+          <p>Copy this URL into a bookmark. The compressed payload stays in the fragment.</p>
+        </div>
+        <span class="pill" id="bookmark-pill">bookmark: pending</span>
+      </div>
+      <div class="bookmark-controls">
+        <textarea id="bookmark-url" readonly spellcheck="false"></textarea>
+        <div class="bookmark-actions">
+          <button type="button" id="copy-bookmark">Copy URL</button>
+          <span class="hint" id="bookmark-hint">Waiting for decoded archive.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="viewer">
+      <div class="overlay" id="overlay">
+        Waiting for archive decode.
+      </div>
+      <iframe
+        id="editor"
+        title="draw.io embed"
+        referrerpolicy="no-referrer"
+        allow="fullscreen"
+      ></iframe>
+    </section>
+  </main>
+
+  <script type="module" src="./schemzip-web.js"></script>
+</body>
+</html>
