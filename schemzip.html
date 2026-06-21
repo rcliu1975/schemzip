@@ -137,6 +137,43 @@
       gap: 10px;
     }
 
+    .import-dropzone {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px dashed rgba(245, 158, 11, 0.35);
+      background: rgba(15, 20, 27, 0.72);
+    }
+
+    .import-dropzone.dragover {
+      border-color: rgba(245, 158, 11, 0.75);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .import-dropzone strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .import-dropzone p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .import-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .import-row input[type="file"] {
+      max-width: 100%;
+      color: var(--muted);
+    }
+
     .bookmark-controls textarea {
       width: 100%;
       min-height: 88px;
@@ -305,6 +342,14 @@
         <span class="pill" id="bookmark-pill">bookmark: pending</span>
       </div>
       <div class="bookmark-controls">
+        <div class="import-dropzone" id="drawio-dropzone">
+          <strong>Import .drawio</strong>
+          <p>Drop a .drawio file here, or choose one below. The page will encode it into the address bar and update the tab title.</p>
+          <div class="import-row">
+            <input id="drawio-file" type="file" accept=".drawio,.xml,application/xml,text/xml" />
+            <span class="hint" id="import-hint">No file selected.</span>
+          </div>
+        </div>
         <textarea id="bookmark-url" readonly spellcheck="false"></textarea>
         <div class="bookmark-actions">
           <button type="button" id="copy-bookmark">Copy URL</button>

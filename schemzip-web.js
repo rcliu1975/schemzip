@@ -2,7 +2,8 @@ const PROGRAM_VERSION = "0.1.0";
 const SCHEMA_VERSION = 1;
 const DEFAULT_OWNER = "rcliu1975";
 const DEFAULT_REPO = "schemzip";
-const DEFAULT_EMBED_URL = "https://embed.diagrams.net/?embed=1&proto=json&ui=atlas&spin=1";
+const DEFAULT_EMBED_URL = "https://embed.diagrams.net/?embed=1&proto=json&ui=atlas&spin=1&lang=en";
+const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
 
 const templateCache = new Map();
 const embeddedOrigins = new Set(["https://embed.diagrams.net"]);
@@ -127,6 +128,33 @@ function buildBookmarkUrl(baseUrl, params) {
   }
   url.hash = fragment.toString();
   return url.toString();
+}
+
+function stripFileExtension(filename) {
+  return String(filename || "diagram").replace(/\.[^.]+$/, "");
+}
+
+function formatEnglishDateTime(date = new Date()) {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  }).format(date);
+}
+
+function updateDocumentTitle(filename, date = new Date()) {
+  const baseName = stripFileExtension(filename);
+  document.title = `Drawio: ${baseName} - ${formatEnglishDateTime(date)}`;
+}
+
+function buildDrawioUploadPayload(xml, sourceFile) {
+  return {
+    schema: RAW_DRAWIO_SCHEMA,
+    schema_version: SCHEMA_VERSION,
+    program_version: PROGRAM_VERSION,
+    source_file: sourceFile,
+    created_at: new Date().toISOString(),
+    xml,
+  };
 }
 
 function parseCompactFragment(fragment) {
@@ -528,6 +556,54 @@ function showOverlay(message, error = null) {
   }
 }
 
+function setImportHint(text) {
+  document.getElementById("import-hint").textContent = text;
+}
+
+function setDropzoneState(isDragging) {
+  document.getElementById("drawio-dropzone").classList.toggle("dragover", isDragging);
+}
+
+function readTextFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(reader.error || new Error("failed to read file"));
+    reader.readAsText(file);
+  });
+}
+
+function setBrowserUrl(url) {
+  window.history.replaceState({}, "", url);
+}
+
+async function importDrawioFile(file) {
+  const text = await readTextFile(file);
+  const payload = buildDrawioUploadPayload(text, file.name);
+  const encoded = await encodePayloadJson(payload);
+  const params = {
+    v: String(SCHEMA_VERSION),
+    lib: "drawio",
+    ver: "raw",
+    data: encoded,
+  };
+  const bookmarkUrl = buildBookmarkUrl(window.location.href, params);
+  setBookmarkUrl(bookmarkUrl);
+  setPill("library-pill", "library: drawio/raw");
+  setPill("payload-pill", `payload: ${encoded.length} chars`);
+  setBrowserUrl(bookmarkUrl);
+  setImportHint(`Imported ${file.name}`);
+  updateDocumentTitle(file.name, new Date());
+  setStatus("ok", "Imported");
+  setDetails([
+    `Imported file: ${file.name}`,
+    "The browser address bar now contains the encoded payload.",
+    "Save this URL as a bookmark to reopen the diagram later.",
+  ]);
+  hideOverlay();
+  await bootEditor(text);
+}
+
 function hideOverlay() {
   document.getElementById("overlay").classList.add("hidden");
 }
@@ -579,6 +655,46 @@ async function bootEditor(xml) {
 
 async function bootApp() {
   document.getElementById("app-version").textContent = `program ${PROGRAM_VERSION}`;
+  const fileInput = document.getElementById("drawio-file");
+  const dropzone = document.getElementById("drawio-dropzone");
+  fileInput.addEventListener("change", async () => {
+    const file = fileInput.files?.[0];
+    if (!file) {
+      return;
+    }
+    try {
+      setImportHint(`Reading ${file.name}...`);
+      await importDrawioFile(file);
+    } catch (error) {
+      setStatus("error", "Import failed");
+      setImportHint(error.message || String(error));
+      showOverlay("Failed to import .drawio file.", error);
+    }
+  });
+  dropzone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    setDropzoneState(true);
+  });
+  dropzone.addEventListener("dragleave", () => {
+    setDropzoneState(false);
+  });
+  dropzone.addEventListener("drop", async (event) => {
+    event.preventDefault();
+    setDropzoneState(false);
+    const file = event.dataTransfer?.files?.[0];
+    if (!file) {
+      return;
+    }
+    try {
+      fileInput.value = "";
+      setImportHint(`Reading ${file.name}...`);
+      await importDrawioFile(file);
+    } catch (error) {
+      setStatus("error", "Import failed");
+      setImportHint(error.message || String(error));
+      showOverlay("Failed to import .drawio file.", error);
+    }
+  });
   document.getElementById("copy-bookmark").addEventListener("click", async () => {
     try {
       await copyBookmarkUrl();
@@ -596,12 +712,14 @@ async function bootApp() {
       setPill("library-pill", "library: none");
       setPill("payload-pill", "payload: none");
       setBookmarkUrl(buildBookmarkUrl(window.location.href, params));
+      setImportHint("Choose a .drawio file or drop one here to generate a bookmark URL.");
       setDetails([
         "Open the page with a bookmark fragment that includes `data`.",
         "Example:",
         "schemzip.html?lib=analog&ver=1.0.0#v=1&lib=analog&ver=1.0.0&data=...",
+        "Or import a .drawio file to generate a browser URL directly.",
       ]);
-      showOverlay("No archive payload found.");
+      showOverlay("No archive payload found. Import a .drawio file to generate one.");
       return;
     }
 
@@ -617,8 +735,25 @@ async function bootApp() {
     ]);
     showOverlay("Decoding archive payload...");
 
-    const { templateDb, url } = await loadTemplateDb(params);
     const archive = await decodePayloadJson(payload);
+    if (archive.schema === RAW_DRAWIO_SCHEMA) {
+      const sourceFile = archive.source_file || "diagram.drawio";
+      const xml = String(archive.xml || "");
+      updateDocumentTitle(sourceFile, archive.created_at ? new Date(archive.created_at) : new Date());
+      setPill("payload-pill", `payload: ${payload.length} chars`);
+      setStatus("ok", "Ready");
+      setDetails([
+        `Imported file: ${sourceFile}`,
+        `Program version: ${archive.program_version || PROGRAM_VERSION}`,
+        `Schema version: ${archive.schema_version || params.v || SCHEMA_VERSION}`,
+        "Diagram XML is loaded directly into the iframe.",
+      ]);
+      document.getElementById("bookmark-hint").textContent = "Imported from a .drawio file. Copy the URL after verifying the diagram.";
+      hideOverlay();
+      await bootEditor(xml);
+      return;
+    }
+    const { templateDb, url } = await loadTemplateDb(params);
     const mxfile = buildArchiveDocument(archive, templateDb);
     const xml = serializeXml(mxfile);
 

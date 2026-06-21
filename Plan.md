@@ -279,6 +279,7 @@ Tasks:
 - [x] Render the diagram inside the browser
 - [x] Use `postMessage` as the integration mechanism
 - [x] Keep the restored XML in memory, not in the bookmark URL
+- [x] Default embed language is English
 
 Deliverables:
 
@@ -294,6 +295,9 @@ V1:
 - [x] Manual bookmark creation
 - [x] Generate URL
 - [x] Copy URL
+- [x] Import `.drawio` file when payload is missing
+- [x] Update browser address bar with encoded URL
+- [x] Update tab title to `Drawio: filename + date time`
 - [ ] User saves bookmark
 
 This is the required first release path.

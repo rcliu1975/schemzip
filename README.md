@@ -101,6 +101,43 @@ python3 restore_aic.py drawio_samples/AnlogIC.aic -o drawio_samples/AnlogIC.rest
 
 還原時會讀取本機的 `template_db.json`，並檢查 `library_hash` 是否一致。
 
+### Web UI 使用方式
+
+Web UI 入口是 `schemzip.html`。建議用本機 HTTP server 開啟，不要直接用 `file://`，這樣 `fetch`、`localStorage` 與 `embed.diagrams.net` 的互動會比較穩定。
+
+```bash
+cd schemzip
+python3 -m http.server 8080
+```
+
+然後開啟：
+
+```text
+http://localhost:8080/schemzip.html?lib=analog&ver=1.0.0#v=1&sha=<library-hash>&data=<compressed-data>
+```
+
+操作流程：
+
+1. 開啟含有 bookmark fragment 的 `schemzip.html`
+2. 頁面會先下載對應版本的 `template_db.json`
+3. 接著在瀏覽器內還原 archive 成 draw.io XML
+4. 最後把 XML 送進 `embed.diagrams.net` iframe 顯示
+5. 頁面下方會產生 canonical bookmark URL，可直接按 `Copy URL`
+
+如果一開始沒有 payload：
+
+1. 用頁面中的 `.drawio` 檔案選擇器，或把檔案拖到 import 區塊
+2. Web UI 會把檔案編碼進目前分頁的網址列
+3. 分頁標題會改成 `Drawio: 檔名 - 英文日期時間`
+4. 之後你就可以直接複製該 URL 當 bookmark 使用
+
+注意：
+
+- `lib` 和 `ver` 要與 bookmark 內容一致
+- 壓縮資料放在 URL fragment，不會寫回 restored XML
+- 第一次開啟時如果瀏覽器沒有快取，會直接抓 GitHub Raw 上的版本化 metadata
+- `embed.diagrams.net` 預設使用英文介面
+
 ## 備註
 
 - `graph.json` 是中間分析格式，不是最終壓縮格式
