@@ -56,6 +56,7 @@
 - `schemzip-web.js`：browser 端 URL parsing、library loading、archive restore、embed bridge
 - `tools/build-dictionary.js`：產生 dictionary / reverse dictionary 的 build-time 工具
 - `drawio_samples/AnlogIC.drawio`：測試樣本
+- `drawio_samples/Analog_Symbols_Text.drawio`：額外的 draw.io corpus sample
 - `Plan.md`：開發計畫與 bookmark-first Web UI roadmap
 
 ## 使用方式
@@ -123,6 +124,7 @@ http://localhost:8080/schemzip.html?lib=analog&ver=1.0.0#v=1&sha=<library-hash>&
 3. 接著在瀏覽器內還原 archive 成 draw.io XML
 4. 最後把 XML 送進 `embed.diagrams.net` iframe 顯示
 5. 頁面下方會產生 canonical bookmark URL，可直接按 `Copy URL`
+6. 使用者再把目前網址手動存成瀏覽器書籤
 
 如果一開始沒有 payload：
 

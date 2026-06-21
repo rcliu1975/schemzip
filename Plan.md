@@ -149,7 +149,7 @@ Recognize flattened symbols inside candidate components.
 Status:
 
 - [x] `matcher.py`
-- [ ] `matcher_test.py`
+- [x] `matcher_test.py`
 
 Deliverables:
 
@@ -280,6 +280,7 @@ Tasks:
 - [x] Use `postMessage` as the integration mechanism
 - [x] Keep the restored XML in memory, not in the bookmark URL
 - [x] Default embed language is English
+- [ ] Add iframe `save` event handling and write back the canonical URL
 
 Deliverables:
 
@@ -298,22 +299,21 @@ V1:
 - [x] Import `.drawio` file when payload is missing
 - [x] Update browser address bar with encoded URL
 - [x] Update tab title to `Drawio: filename + date time`
-- [ ] User saves bookmark
+- 使用者手動將目前網址儲存成瀏覽器書籤
 
 This is the required first release path.
 
 V2:
 
-- [ ] Optional Chrome Extension
-- [ ] `bookmarks` permission only
-- [ ] Generate URL and create bookmark automatically
+Chrome Extension:
 
-The extension is optional and should not block the first release.
+- Not required for the current release scope
+- Keep the Web UI bookmark-first flow self-contained
+- Do not add extension-specific implementation work to the active plan
 
 Deliverables:
 
 - [x] bookmark-friendly URL generator
-- [ ] optional extension plan
 
 ---
 
