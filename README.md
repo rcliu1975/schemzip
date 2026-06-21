@@ -9,6 +9,7 @@
 - 將重複的圖形幾何壓縮成精簡參考
 - 支援無損解壓回 draw.io 格式
 - 壓縮檔與程式本身都保留版本資訊，方便檢查相容性
+- 進一步發展成 bookmark-first 的 Web UI，而不只是 CLI 工具
 
 ## 目前進度
 
@@ -16,17 +17,16 @@
 - Phase 2 已完成：Drawio Parser / CellGraph
 - Phase 3 已完成：Template Matching
 - Phase 4 已完成：AIC 壓縮 / 還原
+- Web UI 方向已在 `Plan.md` 定義為 bookmark-first / `embed.diagrams.net` 架構
 
 ## Plan.md 工作現狀
 
-`Plan.md` 的主線已走到 Phase 4：
+`Plan.md` 的主線目前分成兩段：
 
-- Phase 1：已建立 `Analog.xml` 的 stencil database，包含 `template_db.json` 與 `template_db.pkl`
-- Phase 2：已完成 `.drawio` 解析、連通元件切分、bbox 計算與正規化
-- Phase 3：已完成模板查表比對，能辨識已知 symbol
-- Phase 4：已完成 `.aic` 壓縮與還原流程，並保留版本與 `library_hash`
+- Core engine：Phase 1 到 Phase 4 已完成，包含 `Analog.xml` stencil database、`.drawio` 解析、模板比對、`.aic` 壓縮與還原
+- Web UI：正在往 bookmark-first 的瀏覽器端流程推進，核心目標是 `schemzip.html`、`embed.diagrams.net`、GitHub Raw library、share URL 與 bookmark 生成
 
-目前 `graph.json` 只作為中間分析格式使用，不是最終壓縮格式。
+目前 `graph.json` 只作為中間分析格式使用，不是最終壓縮格式；Web UI 的最終交付格式是 bookmark 可攜帶的 share URL。
 
 ## 版本資訊
 
@@ -46,8 +46,10 @@
 - `matcher.py`：模板比對與 canonical signature
 - `compress_aic.py`：將 `.drawio` 壓縮成 `.aic`
 - `restore_aic.py`：將 `.aic` 還原成 `.drawio`
+- `schemzip_url.py`：share URL、Base64URL 與 payload 編解碼
+- `tools/build-dictionary.js`：產生 dictionary / reverse dictionary 的 build-time 工具
 - `drawio_samples/AnlogIC.drawio`：測試樣本
-- `Plan.md`：開發計畫與階段進度
+- `Plan.md`：開發計畫與 bookmark-first Web UI roadmap
 
 ## 使用方式
 
@@ -97,14 +99,14 @@ python3 restore_aic.py drawio_samples/AnlogIC.aic -o drawio_samples/AnlogIC.rest
 - `graph.json` 是中間分析格式，不是最終壓縮格式
 - `.aic` 才是最終交付的查表壓縮格式
 - 目前 `parse_library.py`、`parse_drawio.py`、`compress_aic.py`、`restore_aic.py` 皆已可執行
-- `Plan.md` 會持續反映分階段進度
+- `Plan.md` 會持續反映 core engine 與 Web UI 的分階段進度
 
-## Todo.md 未來工作
+## Plan.md Web UI Roadmap
 
-`Todo.md` 描述的是更上層的分享與部署方向，重點如下：
+`Plan.md` 描述的是 bookmark-first 的 Web UI 方向，重點如下：
 
-- 建立無後端的 Draw.io 分享流程，讓壓縮資料可直接放進 URL
-- 把 stencil library 放到 GitHub Pages，使用版本化與 hash 驗證
-- 建立 dictionary / reverse dictionary 的 build-time 工具
-- 將壓縮結果編成 Base64URL token stream，方便在瀏覽器端解碼
-- 讓開啟分享 URL 時可自動載入 library、解壓 payload，回到 Draw.io 可編輯內容
+- 使用者以 bookmark 開啟 `schemzip.html`
+- 由 URL 下載對應版本的 stencil library
+- 透過 `embed.diagrams.net` 顯示還原後圖面
+- 壓縮資料放在 URL fragment 中
+- Chrome Extension 僅列為 optional

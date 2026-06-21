@@ -1,911 +1,367 @@
-# AICOMP Development Plan
+# SchemZip Development Plan
 
 # Goal
 
-Develop a compressor/decompressor for draw.io analog schematics.
+Develop a bookmark-first web application for draw.io analog schematics.
 
-The compressor shall:
+The system shall:
 
-* Automatically recognize flattened symbols inside drawio files.
-* Use Analog.xml as a symbol template database.
-* Replace repeated symbol geometries with compact references.
-* Support lossless decompression back to drawio format.
+* Compress `.drawio` XML into a bookmark-safe URL fragment.
+* Let the bookmark itself function as the diagram link.
+* Load the matching stencil library by version from GitHub Raw content.
+* Avoid depending on cloud storage, login, a database, or server-side processing.
+* Restore draw.io XML in the browser.
+* Display the diagram in `embed.diagrams.net` via `postMessage`.
+* Keep the current CLI/core compression engine versioned and reproducible.
 * Continuously improve recognition accuracy using an expanding corpus.
 * 程式要有版本資訊,可以隨時確認.
-* 壓縮後的檔案需要有程式版號資訊,以便解壓時可以確認解壓縮程式的一致性.
+* 壓縮後的資料需要有程式版號與 library 版本資訊，以便後續解碼驗證.
 
 ---
 
 # Architecture
 
+```text
+Bookmark
+    ↓
+schemzip.html?lib=Analog&ver=v1.0.0#<compressed-data>
+    ↓
+Download stencil library from GitHub Raw
+    ↓
+Decode compressed data
+    ↓
+Restore Draw.io XML
+    ↓
+Embed diagrams.net
+    ↓
+Display Diagram
+```
 
+Current core engine path:
+
+```text
 .drawio
-
-↓
-
+    ↓
 Parser
-
-↓
-
+    ↓
 Graph Builder
-
-↓
-
+    ↓
 Template Matcher
-
-↓
-
+    ↓
 Instances
-
-
-↓
-
+    ↓
 Serializer
-
-
-↓
-
+    ↓
 .aic
+```
 
+Restore path:
 
-
-
+```text
 .aic
-
-↓
-
+    ↓
 Deserializer
-
-↓
-
+    ↓
 Instance Expander
-
-↓
-
+    ↓
 drawio Generator
-
-↓
-
+    ↓
 .drawio
-
-
+```
 
 ---
 
-# Phase 1
+# Core Engine Status
 
-Stencil Database
+## Phase 1 - Stencil Database
 
+Input:
 
-
-Input
-
+```text
 Analog.xml
+```
 
+Output:
 
+```text
+template_db.json
+template_db.pkl
+```
 
-Output
-
-
-StencilTemplate
-
-
-class StencilTemplate:
-
-    name:str
-
-    width:float
-
-    height:float
-
-    vertices:list
-
-    edges:list
-
-
-
-Tasks
-
+Status:
 
 - [x] Parse mxlibrary
-
 - [x] Extract all symbols
-
 - [x] Normalize coordinates
-
 - [x] Store canonical representation
-
 - [x] Generate template database
 
+Deliverables:
 
+- `parse_library.py`
+- `template_db.json`
+- `template_db.pkl`
 
+Note:
 
-
-Example
-
-
-
-NMOS
-
-
-nodes
-
-[(8,4),
- (8,28),
- (14,8),
- (14,24)]
-
-
-edges
-
-[(0,1),
- (2,3)]
-
-
-
-
-Deliverables
-
-
-parse_library.py
-
-
-template_db.pkl
-
-
-template_db.json
-
-
+* These artifacts are still used by the current CLI/core path.
+* The Web UI roadmap prefers versioned library fetches from GitHub Raw.
 
 ---
 
+## Phase 2 - Drawio Parser
 
-# Phase 2
+Input:
 
-
-Drawio Parser
-
-
-
-Input
-
-
+```text
 *.drawio
+```
 
+Output:
 
-
-Output
-
-
+```text
 CellGraph
+```
 
-
-
-
-Tasks
-
-
+Status:
 
 - [x] Parse mxGraphModel
-
-
 - [x] Build connectivity graph
-
-
 - [x] Find connected components
-
-
 - [x] Calculate bounding boxes
-
-
 - [x] Normalize coordinates
 
-Validated on `drawio_samples/AnlogIC.drawio`: 39 mxCells, 6 connected components.
+Validated on `drawio_samples/AnlogIC.drawio`.
 
+Deliverables:
 
-
-
-
-Example
-
-
-
-
-39 mxCells
-
-
-↓
-
-6 connected components
-
-
-↓
-
-candidate #0
-
-
-candidate #1
-
-
-candidate #2
-
-
-
-
-
-Deliverables
-
-
-
-parse_drawio.py
-
-
-graph_builder.py
-
-
+- `parse_drawio.py`
+- `graph_builder.py`
 
 ---
 
+## Phase 3 - Template Matching
 
-# Phase 3
+Goal:
 
+Recognize flattened symbols inside candidate components.
 
-Template Matching
+Status:
 
+- [x] `matcher.py`
+- [ ] `matcher_test.py`
 
+Deliverables:
 
-
-Goal
-
-
-Recognize flattened symbols
-
-
-
-
-Input
-
-
-candidate component
-
-
-
-Output
-
-
-NMOS
-
-
-PMOS
-
-
-res
-
-
-cap
-
-
-
-
-Method
-
-
-
-Step1
-
-
-Compare object count
-
-
-
-
-Step2
-
-
-Compare edge topology
-
-
-
-
-Step3
-
-
-Normalize coordinates
-
-
-
-
-Step4
-
-
-Rigid transform matching
-
-
-
-
-translation
-
-
-rotation
-
-
-mirror
-
-
-
-
-Step5
-
-
-Tolerance matching
-
-
-
-
-distance < 0.5 pixel
-
-
-
-
-Similarity score
-
-
-
-0~100
-
-
-
-
-Acceptance
-
-
-score >95
-
-
-
-
-
-Pseudo
-
-
-
-
-match(candidate):
-
-
-for template in db:
-
-
-if topology mismatch:
-
-
-continue
-
-
-for transform in transforms:
-
-
-score=compare()
-
-
-if score>best:
-
-
-best=score
-
-
-
-
-
-Deliverables
-
-
-- [x] matcher.py
-- [ ] matcher_test.py
-
-
-
+- `matcher.py`
 
 ---
 
+## Phase 4 - Compression / Restore
 
-# Phase 4
+Output format:
 
-
-Compression
-
-
-
-
-Output format
-
-
+```text
 AIC1
+```
 
+Status:
 
+- [x] `compress_aic.py`
+- [x] `restore_aic.py`
 
+Validated on `drawio_samples/AnlogIC.drawio`:
 
-Header
+- AIC archive: 1.5K
+- restored drawio: 16K
+- 39 mxCells preserved
 
+Deliverables:
 
-
-magic
-
-
-AIC1
-
-
-
-version
-
-
-1
-
-
-
-library_hash
-
-
-uint64
-
-
-
-object_count
-
-
-uint32
-
-
-
-
-
-Instance
-
-
-
-type_id
-
-
-uint16
-
-
-
-x
-
-
-uint16
-
-
-
-y
-
-
-uint16
-
-
-
-rotation
-
-
-uint8
-
-
-
-mirror
-
-
-uint8
-
-
-
-text_id
-
-
-uint16
-
-
-
-
-
-
-Deliverables
-
-
-- [x] compress_aic.py
-- [x] restore_aic.py
-
-Validated on `drawio_samples/AnlogIC.drawio`: AIC archive 1.5K, restored drawio 16K, 39 mxCells preserved.
-
-
-
-
-Example
-
-
-
-
-NMOS
-
-120
-
-220
-
-R90
-
-
-
-
-res
-
-180
-
-260
-
-R0
-
-
-
-
-cap
-
-200
-
-300
-
-
-
-
+- `compress_aic.py`
+- `restore_aic.py`
 
 ---
 
+# Web UI Roadmap
 
-# Phase 5
+## Product Shape
 
+Opening a bookmark shall:
 
-Decompression
+1. Load `schemzip.html`.
+2. Read `lib`, `ver`, and compressed payload from the URL.
+3. Download the corresponding stencil library.
+4. Restore draw.io XML in the browser.
+5. Display the diagram in `embed.diagrams.net`.
 
+This is the browser-facing product direction. The CLI/core engine remains useful for build-time and regression workflows, but it is not the primary user interface.
 
+## URL Format
 
+Target URL:
 
-Input
+```text
+http://localhost:8080/schemzip.html?lib=Analog&ver=v1.0.0#<compressed-data>
+```
 
+Where:
 
-AIC1
+```text
+lib
+    stencil library name
 
+ver
+    git tag / release version
 
+compressed-data
+    schemzip encoded diagram
+```
 
+The restored XML must not be pushed back into the URL.
 
-Output
+## Phase 5 - Bookmark URL Parsing
 
+Tasks:
 
-drawio
+- Parse URL hash and query parameters
+- Extract `lib`, `ver`, and compressed payload
+- Keep restored XML out of the URL
 
+Deliverables:
 
-
-
-Process
-
-
-
-Load Analog.xml
-
-
-Lookup stencil
-
-
-Instantiate geometry
-
-
-Apply transform
-
-
-Assign mxCell ids
-
-
-Generate XML
-
-
-
-
-
-Deliverables
-
-
-
-decompress.py
-
-
-
-
-decompress_drawio.py
-
-
-
-
+- `schemzip.html`
+- URL parser logic
+- share URL builder
 
 ---
 
+## Phase 6 - Versioned Library Loading
 
-# Phase 6
+Library source:
 
+```text
+https://raw.githubusercontent.com/rcliu1975/schemzip/v1.0.0/Analog.xml
+```
 
-Regression Corpus
+Tasks:
 
+- Download versioned stencil library from GitHub Raw
+- Avoid `main/Analog.xml`
+- Validate bookmark library version for reproducible decoding
+- Cache library metadata locally when needed
 
+Do not rely on Local Storage sharing across origins. Use the embed-first browser flow instead of a viewer page that cannot access local bookmark state.
 
+Deliverables:
 
-Directory
-
-
-
-
-libraries/
-
-    Analog.xml
-
-
-drawio_samples/
-
-
-
-
-amp001.drawio
-
-
-amp002.drawio
-
-
-lna01.drawio
-
-
-mixer03.drawio
-
-
-pll02.drawio
-
-
-
-
-
-compressed/
-
-
-
-
-tests/
-
-
-
-
-expected/
-
-
-
-
-metrics/
-
-
-
-
-
-
-Metrics
-
-
-
-
-recognition rate
-
-
-compression ratio
-
-
-false positive count
-
-
-runtime
-
-
-
-
-
-
-Example
-
-
-
-
-recognized
-
-
-37/39
-
-
-
-
-94.8%
-
-
-
-
-compression
-
-
-16390 bytes
-
-
-→
-
-
-472 bytes
-
-
-
-
-34.7x
-
-
-
-
-
+- library loader
+- versioned library metadata
 
 ---
 
+## Phase 7 - Draw.io Embed Integration
 
-# Phase 7
+Use:
 
+```text
+https://embed.diagrams.net/?embed=1&proto=json
+```
 
-Continuous Improvement
+Tasks:
 
+- Initialize iframe
+- Wait for the embed ready message
+- Send `load` message with restored XML
+- Render the diagram inside the browser
+- Use `postMessage` as the integration mechanism
+- Keep the restored XML in memory, not in the bookmark URL
 
+Deliverables:
 
-
-Analog.xml grows over time
-
-
-
-
-New drawio files become test cases
-
-
-
-
-Unknown symbols detected
-
-
-
-
-Export candidate templates
-
-
-
-
-review/
-
-
-unknown_001.drawio
-
-
-unknown_002.drawio
-
-
-
-
-
-Human confirms
-
-
-
-
-Append into Analog.xml
-
-
-
-
-Rebuild database
-
-
-
-
-Run regression
-
-
-
-
+- embed UI integration
+- `postMessage` bridge
 
 ---
 
+## Phase 8 - Bookmark Generation
 
-# Phase 8
+V1:
 
+- Manual bookmark creation
+- Generate URL
+- Copy URL
+- User saves bookmark
 
-CLI
+This is the required first release path.
 
+V2:
 
+- Optional Chrome Extension
+- `bookmarks` permission only
+- Generate URL and create bookmark automatically
 
+The extension is optional and should not block the first release.
 
-aicomp build-db Analog.xml
+Deliverables:
 
-
-aicomp compress xxx.drawio
-
-
-aicomp decompress xxx.aic
-
-
-aicomp benchmark
-
-
-aicomp test
-
-
-
-
-
-Examples
-
-
-
-
-aicomp compress OTA.drawio
-
-
-
-OTA.aic
-
-
-
-
-aicomp decompress OTA.aic
-
-
-
-OTA_restored.drawio
-
-
-
-
-aicomp benchmark
-
-
-
-
-Recognition Rate : 99.2%
-
-Compression Ratio : 41.7x
-
-False Positive : 0
-
-
-
+- bookmark-friendly URL generator
+- optional extension plan
 
 ---
 
+# Success Criteria
 
-# Long-term Ideas
+A user can:
 
+```text
+Open Bookmark
+    ↓
+Restore Diagram
+    ↓
+View Diagram
+```
 
+without:
 
+* cloud storage
+* local files
+* login
+* server-side processing
 
-Wire compression
+and obtain the same diagram years later using the library version encoded in the bookmark.
 
+---
 
-Text dictionary compression
+# Future Features
 
+* Multi-library support
+* GitHub release auto-discovery
+* Library cache
+* Offline mode
+* Bookmark folder organization
+* Diagram search
+* Diagram metadata
 
-Hierarchical cell recognition
+---
 
+# Success Criteria
 
-Subcircuit discovery
+A user can:
 
+```text
+Open Bookmark
+    ↓
+Restore Diagram
+    ↓
+View Diagram
+```
 
-Machine-learning-assisted matcher
+without:
 
+* cloud storage
+* local files
+* login
+* server-side processing
 
-OASIS exporter
-
-
-SVG exporter
-
-
-Cadence schematic exporter
+and obtain the same diagram years later using the library version encoded in the bookmark.
