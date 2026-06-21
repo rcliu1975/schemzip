@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from graph_builder import CellRecord, build_components, parse_cell
 from matcher import build_template_index, canonical_shape_from_cells, load_template_db, match_component
+from schemzip_url import build_share_params, build_share_url
 
 
 PROGRAM_VERSION = "0.1.0"
@@ -185,6 +186,9 @@ def compress_drawio(path: Path, template_db_path: Path) -> Dict[str, Any]:
         "schema_version": SCHEMA_VERSION,
         "program_version": PROGRAM_VERSION,
         "source_file": path.name,
+        "library_id": templates.get("library_id")
+        or Path(templates.get("source_file") or template_db_path.name).stem.lower(),
+        "library_version": templates.get("library_version") or "1.0.0",
         "library_hash": templates.get("source_hash"),
         "page_count": len(pages),
         "pages": pages,
@@ -201,6 +205,12 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("input", help="Path to draw.io file")
     parser.add_argument("--templates", default="template_db.json", help="Path to template_db.json")
     parser.add_argument("--output", "-o", help="Output .aic path")
+    parser.add_argument("--share-url", action="store_true", help="Print a share URL for the compressed archive")
+    parser.add_argument(
+        "--base-url",
+        default="https://schemzip.app/",
+        help="Base URL used when building share URLs",
+    )
     args = parser.parse_args(argv)
 
     input_path = Path(args.input).resolve()
@@ -209,6 +219,18 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     data = compress_drawio(input_path, template_db_path)
     write_json(data, output_path)
+    share_url = None
+    if args.share_url:
+        share_url = build_share_url(
+            args.base_url,
+            build_share_params(
+                data,
+                library_id=str(data.get("library_id") or "unknown"),
+                library_version=str(data.get("library_version") or "1.0.0"),
+                library_sha=str(data.get("library_hash") or ""),
+                schema_version=1,
+            ),
+        )
     print(
         json.dumps(
             {
@@ -217,6 +239,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 "literal": sum(page["literal_count"] for page in data["pages"]),
                 "program_version": PROGRAM_VERSION,
                 "schema_version": SCHEMA_VERSION,
+                **({"share_url": share_url} if share_url else {}),
             },
             ensure_ascii=True,
             sort_keys=True,

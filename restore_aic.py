@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from matcher import load_template_db
+from schemzip_url import decode_share_payload
 
 
 PROGRAM_VERSION = "0.1.0"
@@ -145,15 +146,22 @@ def _build_graph_model(page: Dict[str, Any]) -> ET.Element:
     return graph_model
 
 
-def restore_archive(path: Path) -> ET.Element:
-    raw = path.read_bytes()
-    if raw[:2] == b"\x1f\x8b":
-        raw = gzip.decompress(raw)
-    data = json.loads(raw.decode("utf-8"))
+def _load_archive_data(source: str) -> Dict[str, Any]:
+    path = Path(source)
+    if path.exists():
+        raw = path.read_bytes()
+        if raw[:2] == b"\x1f\x8b":
+            raw = gzip.decompress(raw)
+        return json.loads(raw.decode("utf-8"))
+    return decode_share_payload(source)["archive"]
+
+
+def restore_archive(source: str, template_db_path: Path) -> ET.Element:
+    data = _load_archive_data(source)
     if data.get("schema") != "schemzip.aic-archive":
         raise ValueError("unsupported archive schema")
 
-    template_db = load_template_db(Path(__file__).with_name("template_db.json"))
+    template_db = load_template_db(template_db_path)
     if data.get("library_hash") and template_db.get("source_hash") != data.get("library_hash"):
         raise ValueError("template database hash mismatch")
     template_by_name = {template.get("name"): template for template in template_db.get("templates", [])}
@@ -209,16 +217,24 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", help="Path to .aic archive")
     parser.add_argument("--output", "-o", help="Output draw.io path")
+    parser.add_argument("--templates", default="template_db.json", help="Path to template_db.json")
     args = parser.parse_args(argv)
 
-    input_path = Path(args.input).resolve()
-    output_path = Path(args.output).resolve() if args.output else input_path.with_suffix(".restored.drawio")
-    root = restore_archive(input_path)
+    input_source = args.input
+    template_db_path = Path(args.templates).resolve()
+    input_path = Path(input_source).resolve() if Path(input_source).exists() else None
+    if args.output:
+        output_path = Path(args.output).resolve()
+    elif input_path is not None:
+        output_path = input_path.with_suffix(".restored.drawio")
+    else:
+        output_path = Path("restored.drawio").resolve()
+    root = restore_archive(input_source, template_db_path)
     write_drawio(root, output_path)
     print(
         json.dumps(
             {
-                "archive": str(input_path),
+                "archive": str(input_path or input_source),
                 "output": str(output_path),
                 "program_version": PROGRAM_VERSION,
                 "schema_version": SCHEMA_VERSION,

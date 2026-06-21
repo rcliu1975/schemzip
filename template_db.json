@@ -3,6 +3,8 @@
   "schema_version": 1,
   "program_version": "0.1.0",
   "source_file": "Analog.xml",
+  "library_id": "analog",
+  "library_version": "1.0.0",
   "source_hash": "32133e7cb0591b01195018f4b7655c8676d617bfd0f4947bd25c33f18e321c94",
   "source_hash_u64": 3608296431709395713,
   "template_count": 19,

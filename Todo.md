@@ -178,6 +178,13 @@ https://rcliu1975.github.io/schemzip/libs/analog/analog-v1.xml
 * 產生 reverse dictionary
 * 計算 SHA256
 
+目前已先完成一版 build-time dictionary 產生器，直接讀取 `template_db.json` 並輸出：
+
+* `dictionary.json`
+* `reverse_dictionary.json`
+
+後續若需要可再把它往前推到直接吃 raw stencil XML。
+
 ---
 
 # Phase 3 — SchemZip Compression Engine
@@ -299,6 +306,12 @@ v=1
 * 驗證參數
 * 取得 payload
 
+目前已在 Python 端補上共用模組 `schemzip_url.py`，可直接處理：
+
+* Base64URL encode/decode
+* share fragment parse/build
+* share payload encode/decode
+
 ---
 
 # Phase 5 — Library Loader
@@ -353,6 +366,11 @@ Version mismatch
 ```
 
 停止解壓縮。
+
+目前已在本機 AIC / share URL 還原流程中保留 `library_hash` 比對：
+
+* 若 archive 內的 `library_hash` 與本機 `template_db.json` 不一致，還原會失敗
+* 真正的遠端 library 下載與 hash 驗證仍待下一階段補上
 
 ---
 
@@ -665,20 +683,24 @@ Analog Library
 第一版完成條件：
 
 * [ ] GitHub Pages 可提供 Analog.xml
-* [ ] 建立 Dictionary Builder
-* [ ] SchemZip 壓縮 Draw.io XML
-* [ ] Base64URL Encode
-* [ ] 產生 Share URL
-* [ ] URL 可還原 Draw.io XML
+* [x] 建立 Dictionary Builder
+* [x] SchemZip 壓縮 Draw.io XML
+* [x] Base64URL Encode
+* [x] 產生 Share URL
+* [x] URL 可還原 Draw.io XML
 * [ ] 自動下載對應 Library
 * [ ] SHA256 驗證
 * [ ] Embed Draw.io Viewer
 * [ ] Embed Draw.io Editor
-* [ ] Share Link 功能
+* [x] Share Link 功能
 * [ ] 完全無後端
 * [ ] 可部署於 GitHub Pages
+
+目前可用狀態：
+
+* 壓縮端可直接輸出 bookmark share URL
+* 還原端可直接吃 share URL 並還原為 draw.io XML
 
 完成後即可達成：
 
 **「一個 URL = 一個完整 Draw.io 圖檔，可分享、可還原、可編輯、無需伺服器儲存。」**
-

@@ -249,7 +249,12 @@ def _extract_template(item: Dict[str, Any], source_hash: str, index: int) -> Ste
     )
 
 
-def build_database(input_path: Path) -> Dict[str, Any]:
+def build_database(
+    input_path: Path,
+    *,
+    library_id: Optional[str] = None,
+    library_version: str = "1.0.0",
+) -> Dict[str, Any]:
     items, raw_bytes, body = _read_mxlibrary(input_path)
     source_hash = hashlib.sha256(raw_bytes).hexdigest()
     source_hash_u64 = int.from_bytes(hashlib.sha256(raw_bytes).digest()[:8], "big")
@@ -262,6 +267,8 @@ def build_database(input_path: Path) -> Dict[str, Any]:
         "schema_version": SCHEMA_VERSION,
         "program_version": PROGRAM_VERSION,
         "source_file": input_path.name,
+        "library_id": library_id or input_path.stem.lower(),
+        "library_version": library_version,
         "source_hash": source_hash,
         "source_hash_u64": source_hash_u64,
         "template_count": len(templates),
@@ -290,6 +297,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     )
     parser.add_argument("--json", dest="json_path", help="Output JSON path")
     parser.add_argument("--pickle", dest="pickle_path", help="Output pickle path")
+    parser.add_argument("--library-id", dest="library_id", help="Library identifier")
+    parser.add_argument(
+        "--library-version",
+        dest="library_version",
+        default="1.0.0",
+        help="Library version string",
+    )
     args = parser.parse_args(argv)
 
     input_path = Path(args.input).resolve()
@@ -299,7 +313,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.pickle_path:
         pickle_path = Path(args.pickle_path).resolve()
 
-    database = build_database(input_path)
+    database = build_database(
+        input_path,
+        library_id=args.library_id,
+        library_version=args.library_version,
+    )
     write_outputs(database, json_path, pickle_path)
     print(
         json.dumps(
