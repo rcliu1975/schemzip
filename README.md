@@ -139,6 +139,7 @@ http://localhost:8080/schemzip.html?lib=analog&ver=1.0.0#v=1&sha=<library-hash>&
 - 壓縮資料放在 URL fragment，不會寫回 restored XML
 - 第一次開啟時如果瀏覽器沒有快取，會直接抓 GitHub Raw 上的版本化 metadata
 - `embed.diagrams.net` 預設使用英文介面
+- `embed.diagrams.net` 會在 init 後直接透過 `loadLibs` 載入 `Analog.xml` stencil library
 - 在 iframe 內按 `Save` 後，外層頁面會回寫 canonical URL 到網址列
 
 ## 備註

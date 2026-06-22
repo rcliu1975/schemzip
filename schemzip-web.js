@@ -2,16 +2,42 @@ const PROGRAM_VERSION = "0.1.0";
 const SCHEMA_VERSION = 1;
 const DEFAULT_OWNER = "rcliu1975";
 const DEFAULT_REPO = "schemzip";
-const DEFAULT_EMBED_URL = "https://embed.diagrams.net/?embed=1&proto=json&ui=atlas&spin=1&lang=en";
+const CUSTOM_LIBRARY_URL = "https://raw.githubusercontent.com/rcliu1975/schemzip/refs/heads/main/Analog.xml";
+const DEFAULT_EMBED_URL =
+  "https://embed.diagrams.net/?embed=1&proto=json&spin=1&libraries=1&noSaveBtn=0&saveAndExit=0&noExitBtn=1&ui=min";
 const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
+const CUSTOM_LIBRARY_TITLE = "Analog";
 
 const templateCache = new Map();
+let customLibraryXmlPromise = null;
 const embeddedOrigins = new Set(["https://embed.diagrams.net"]);
+const DEBUG_MODE = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
 const appState = {
   sourceFile: "diagram.drawio",
   currentXml: "",
   mode: "bookmark",
 };
+
+function debugLog(message) {
+  if (!DEBUG_MODE) {
+    return;
+  }
+  const text = typeof message === "string" ? message : JSON.stringify(message);
+  console.debug(`[schemzip] ${text}`);
+  const panel = document.getElementById("debug-panel");
+  const log = document.getElementById("debug-log");
+  if (!panel || !log) {
+    return;
+  }
+  panel.classList.remove("hidden");
+  const lines = log.textContent ? `${log.textContent}\n` : "";
+  log.textContent = `${lines}${new Date().toISOString()} ${text}`;
+}
+
+function debugError(label, error) {
+  const message = error?.stack || error?.message || String(error);
+  debugLog(`${label}: ${message}`);
+}
 
 function getLocalStorage() {
   if (typeof window === "undefined") {
@@ -103,6 +129,27 @@ async function encodePayloadJson(payload) {
   const raw = new TextEncoder().encode(JSON.stringify(payload));
   const compressed = await compressGzip(raw);
   return encodeBase64Url(compressed);
+}
+
+async function fetchText(url) {
+  debugLog(`fetchText start: ${url}`);
+  const response = await fetch(url, { cache: "no-cache" });
+  if (!response.ok) {
+    throw new Error(`failed to load ${url}: ${response.status} ${response.statusText}`);
+  }
+  const text = await response.text();
+  debugLog(`fetchText ok: ${url} (${text.length} chars)`);
+  return text;
+}
+
+function getCustomLibraryXml() {
+  if (!customLibraryXmlPromise) {
+    debugLog("custom library cache miss");
+    customLibraryXmlPromise = fetchText(CUSTOM_LIBRARY_URL);
+  } else {
+    debugLog("custom library cache hit");
+  }
+  return customLibraryXmlPromise;
 }
 
 function buildShareUrl(baseUrl, params) {
@@ -633,6 +680,9 @@ function setEditorUrl(url) {
 }
 
 async function bootEditor(xml) {
+  debugLog("bootEditor start");
+  const customLibraryXml = await getCustomLibraryXml();
+  debugLog(`custom library loaded (${customLibraryXml.length} chars)`);
   const editorUrl = DEFAULT_EMBED_URL;
   const iframe = document.getElementById("editor");
   let ready = false;
@@ -651,16 +701,26 @@ async function bootEditor(xml) {
     } catch {
       return;
     }
+    debugLog(`iframe event: ${msg.event || "unknown"}`);
     if (msg.event === "init") {
       ready = true;
+      debugLog("sending load");
       iframe.contentWindow?.postMessage(JSON.stringify({
         action: "load",
         autosave: 0,
         xml,
       }), "*");
+      setTimeout(() => {
+        debugLog("sending loadLibs");
+        iframe.contentWindow?.postMessage(JSON.stringify({
+          action: "loadLibs",
+          libs: [{ title: CUSTOM_LIBRARY_TITLE, xml: customLibraryXml }],
+        }), "*");
+      }, 800);
       return;
     }
     if (msg.event === "save" && typeof msg.xml === "string" && msg.xml.length > 0) {
+      debugLog(`save event received (${msg.xml.length} chars)`);
       appState.currentXml = msg.xml;
       appState.mode = "raw";
       updateDocumentTitle(appState.sourceFile || "diagram.drawio", new Date());
