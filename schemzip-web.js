@@ -4,10 +4,11 @@ const DEFAULT_OWNER = "rcliu1975";
 const DEFAULT_REPO = "schemzip";
 const CUSTOM_LIBRARY_URL = "https://raw.githubusercontent.com/rcliu1975/schemzip/refs/heads/main/Analog.xml";
 const DEFAULT_EMBED_URL =
-  "https://embed.diagrams.net/?embed=1&proto=json&spin=1&libraries=1&noSaveBtn=0&saveAndExit=0&noExitBtn=1&ui=min";
+  "https://embed.diagrams.net/?embed=1&proto=json&spin=1&libraries=1&noSaveBtn=0&saveAndExit=0&noExitBtn=1&ui=min&lang=en";
 const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
 const CUSTOM_LIBRARY_TITLE = "Analog";
-const BLANK_DRAWIO_XML = '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>';
+const BLANK_DRAWIO_XML =
+  '<mxGraphModel grid="1" gridSize="8"><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>';
 
 const templateCache = new Map();
 let customLibraryXmlPromise = null;
@@ -404,7 +405,7 @@ function buildGraphModel(page) {
     dx: String(graphAttrs.dx ?? 0),
     dy: String(graphAttrs.dy ?? 0),
     grid: String(graphAttrs.grid ?? 1),
-    gridSize: String(graphAttrs.gridSize ?? 10),
+    gridSize: String(graphAttrs.gridSize ?? 8),
     guides: String(graphAttrs.guides ?? 1),
     tooltips: String(graphAttrs.tooltips ?? 1),
     connect: String(graphAttrs.connect ?? 0),
