@@ -46,41 +46,11 @@
       grid-template-rows: auto auto minmax(0, 1fr);
     }
 
-    .hero,
-    .status,
     .viewer {
       border: 1px solid var(--border);
       background: rgba(22, 27, 34, 0.88);
       box-shadow: 0 18px 48px var(--shadow);
       backdrop-filter: blur(10px);
-    }
-
-    .hero {
-      padding: 18px 20px;
-      border-radius: 18px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: grid;
-      gap: 6px;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 1.35rem;
-      letter-spacing: 0.02em;
-    }
-
-    .brand p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 70ch;
-      line-height: 1.5;
     }
 
     .pill {
@@ -95,14 +65,7 @@
       white-space: nowrap;
     }
 
-    .status {
-      padding: 16px 20px;
-      border-radius: 16px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .bookmark {
+    .toolbar {
       padding: 16px 20px;
       border-radius: 16px;
       border: 1px solid var(--border);
@@ -112,89 +75,14 @@
       gap: 12px;
     }
 
-    .bookmark-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .bookmark-head h2 {
-      margin: 0;
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-    }
-
-    .bookmark-head p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .bookmark-controls {
-      display: grid;
-      gap: 10px;
-    }
-
-    .import-dropzone {
-      display: grid;
-      gap: 10px;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px dashed rgba(245, 158, 11, 0.35);
-      background: rgba(15, 20, 27, 0.72);
-    }
-
-    .import-dropzone.dragover {
-      border-color: rgba(245, 158, 11, 0.75);
-      background: rgba(245, 158, 11, 0.08);
-    }
-
-    .import-dropzone strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .import-dropzone p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .import-row {
+    .toolbar-row {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
 
-    .import-row input[type="file"] {
-      max-width: 100%;
-      color: var(--muted);
-    }
-
-    .bookmark-controls textarea {
-      width: 100%;
-      min-height: 88px;
-      resize: vertical;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(15, 20, 27, 0.95);
-      color: var(--text);
-      padding: 12px 14px;
-      font: inherit;
-      line-height: 1.5;
-    }
-
-    .bookmark-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .bookmark-actions button {
+    .toolbar button {
       border: 1px solid var(--border);
       border-radius: 12px;
       background: linear-gradient(180deg, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0.1));
@@ -204,20 +92,23 @@
       cursor: pointer;
     }
 
-    .bookmark-actions button:hover {
+    .toolbar button:hover {
       border-color: rgba(245, 158, 11, 0.45);
     }
 
-    .bookmark-actions .hint {
+    .toolbar .hint {
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    .status-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
+    .toolbar input[type="text"] {
+      width: min(100%, 420px);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 27, 0.95);
+      color: var(--text);
+      padding: 10px 12px;
+      font: inherit;
     }
 
     .badge {
@@ -350,56 +241,21 @@
 </head>
 <body>
   <main class="app">
-    <section class="hero">
-      <div class="brand">
-        <h1>schemzip bookmark viewer</h1>
-        <p>
-          Bookmark-first draw.io restoration. The fragment keeps the compressed archive only;
-          restored XML stays in memory and is handed to <code>embed.diagrams.net</code>.
-        </p>
-      </div>
-      <div class="pill" id="app-version">program 0.1.0</div>
-    </section>
-
-    <section class="status" aria-live="polite">
-      <div class="status-row">
-        <span class="badge warn" id="state-badge">Loading</span>
-        <span class="pill" id="library-pill">library: pending</span>
-        <span class="pill" id="payload-pill">payload: pending</span>
-      </div>
-      <div class="details" id="details">
-        Opening bookmark and resolving archive metadata.
-      </div>
-    </section>
-
     <section class="debug hidden" id="debug-panel" aria-label="Debug log">
       <h2>Debug Log</h2>
       <pre id="debug-log"></pre>
     </section>
 
-    <section class="bookmark" aria-label="Bookmark tools">
-      <div class="bookmark-head">
-        <div>
-          <h2>Bookmark URL</h2>
-          <p>Copy this URL into a bookmark. The compressed payload stays in the fragment.</p>
-        </div>
-        <span class="pill" id="bookmark-pill">bookmark: pending</span>
+    <section class="toolbar" aria-label="Editor tools">
+      <div class="toolbar-row">
+        <button type="button" id="new-file">New</button>
+        <button type="button" id="open-file">Open</button>
+        <input id="filename" type="text" value="diagram.drawio" spellcheck="false" />
+        <span class="badge warn" id="state-badge">Loading</span>
+        <span class="pill" id="payload-pill">payload: pending</span>
+        <span class="hint" id="toolbar-hint">Blank diagram ready.</span>
       </div>
-      <div class="bookmark-controls">
-        <div class="import-dropzone" id="drawio-dropzone">
-          <strong>Import .drawio</strong>
-          <p>Drop a .drawio file here, or choose one below. The page will encode it into the address bar and update the tab title.</p>
-          <div class="import-row">
-            <input id="drawio-file" type="file" accept=".drawio,.xml,application/xml,text/xml" />
-            <span class="hint" id="import-hint">No file selected.</span>
-          </div>
-        </div>
-        <textarea id="bookmark-url" readonly spellcheck="false"></textarea>
-        <div class="bookmark-actions">
-          <button type="button" id="copy-bookmark">Copy URL</button>
-          <span class="hint" id="bookmark-hint">Waiting for decoded archive.</span>
-        </div>
-      </div>
+      <input id="drawio-file" type="file" accept=".drawio,.xml,application/xml,text/xml" hidden />
     </section>
 
     <section class="viewer">
