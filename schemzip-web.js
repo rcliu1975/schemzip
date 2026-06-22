@@ -2,8 +2,7 @@ const PROGRAM_VERSION = "0.1.0";
 const SCHEMA_VERSION = 1;
 const DEFAULT_OWNER = "rcliu1975";
 const DEFAULT_REPO = "schemzip";
-const DEFAULT_EMBED_URL = "https://embed.diagrams.net/?embed=1&proto=json&ui=atlas&spin=1&lang=en" +
-  "&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Frcliu1975%2Fschemzip%2Frefs%2Fheads%2Fmain%2FAnalog.xml";
+const DEFAULT_EMBED_URL = "https://embed.diagrams.net/?embed=1&proto=json&ui=atlas&spin=1&lang=en";
 const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
 
 const templateCache = new Map();
