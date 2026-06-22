@@ -26,7 +26,7 @@
     html,
     body {
       margin: 0;
-      min-height: 100%;
+      height: 100%;
       background:
         radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 26%),
         radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 22%),
@@ -37,13 +37,16 @@
 
     body {
       padding: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .app {
+      flex: 1;
       display: grid;
       gap: 16px;
-      min-height: calc(100vh - 40px);
-      grid-template-rows: auto auto minmax(0, 1fr);
+      min-height: 0;
+      grid-template-rows: auto minmax(0, 1fr);
     }
 
     .viewer {
@@ -67,10 +70,6 @@
 
     .toolbar {
       padding: 16px 20px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(22, 27, 34, 0.82);
-      box-shadow: 0 18px 48px var(--shadow);
       display: grid;
       gap: 12px;
     }
@@ -192,15 +191,15 @@
     .viewer {
       border-radius: 18px;
       overflow: hidden;
-      min-height: 520px;
       position: relative;
+      min-height: 0;
     }
 
     .viewer iframe {
       border: 0;
       width: 100%;
       height: 100%;
-      min-height: 520px;
+      min-height: 0;
       display: block;
       background: #fff;
     }
@@ -234,7 +233,7 @@
       }
 
       .app {
-        min-height: calc(100vh - 24px);
+        min-height: 0;
       }
     }
   </style>
