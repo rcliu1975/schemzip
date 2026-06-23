@@ -4,7 +4,7 @@ const DEFAULT_OWNER = "rcliu1975";
 const DEFAULT_REPO = "schemzip";
 const CUSTOM_LIBRARY_URL = "https://raw.githubusercontent.com/rcliu1975/schemzip/refs/heads/main/Analog.xml";
 const DEFAULT_EMBED_URL =
-  "https://embed.diagrams.net/?embed=1&proto=json&spin=1&libraries=1&noSaveBtn=0&saveAndExit=0&noExitBtn=1&ui=min&lang=en";
+  `https://embed.diagrams.net/?embed=1&proto=json&spin=1&libraries=1&noSaveBtn=0&saveAndExit=0&noExitBtn=1&ui=min&lang=en&clibs=U${encodeURIComponent(CUSTOM_LIBRARY_URL)}`;
 const RAW_DRAWIO_SCHEMA = "schemzip.drawio-xml";
 const CUSTOM_LIBRARY_TITLE = "Analog";
 const BLANK_DRAWIO_XML =
@@ -12,7 +12,6 @@ const BLANK_DRAWIO_XML =
 
 const templateCache = new Map();
 let customLibraryXmlPromise = null;
-let customLibraryLoadTimer = null;
 let editorMessageHandler = null;
 const embeddedOrigins = new Set(["https://embed.diagrams.net"]);
 const DEBUG_MODE = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
@@ -160,15 +159,6 @@ function postEditorMessage(iframe, message) {
   iframe.contentWindow?.postMessage(JSON.stringify(message), "*");
 }
 
-async function loadCustomLibraryIntoEditor(iframe) {
-  const customLibraryXml = await getCustomLibraryXml();
-  debugLog(`custom library loaded (${customLibraryXml.length} chars)`);
-  postEditorMessage(iframe, {
-    action: "loadLibs",
-    libs: [{ title: CUSTOM_LIBRARY_TITLE, xml: customLibraryXml }],
-  });
-}
-
 async function loadDiagramIntoEditor(iframe, xml) {
   debugLog(`sending load (${xml.length} chars)`);
   postEditorMessage(iframe, {
@@ -176,14 +166,6 @@ async function loadDiagramIntoEditor(iframe, xml) {
     autosave: 0,
     xml,
   });
-  if (customLibraryLoadTimer) {
-    window.clearTimeout(customLibraryLoadTimer);
-  }
-  customLibraryLoadTimer = window.setTimeout(() => {
-    loadCustomLibraryIntoEditor(iframe).catch((error) => {
-      debugError("load custom library", error);
-    });
-  }, 800);
 }
 
 function buildShareUrl(baseUrl, params) {
